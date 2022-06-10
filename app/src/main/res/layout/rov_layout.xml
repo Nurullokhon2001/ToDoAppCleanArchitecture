@@ -29,7 +29,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             app:cardBackgroundColor="@color/red"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="100dp"
             app:layout_constraintBottom_toBottomOf="@+id/title_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/title_text" />
