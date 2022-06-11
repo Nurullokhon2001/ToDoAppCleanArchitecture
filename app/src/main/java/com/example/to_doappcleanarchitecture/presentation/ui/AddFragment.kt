@@ -10,12 +10,12 @@ import com.example.to_doappcleanarchitecture.R
 import com.example.to_doappcleanarchitecture.data.model.ToDoData
 import com.example.to_doappcleanarchitecture.databinding.FragmentAddBinding
 import com.example.to_doappcleanarchitecture.presentation.vm.SharedViewModel
-import com.example.to_doappcleanarchitecture.presentation.vm.ToDoViewModel
+import com.example.to_doappcleanarchitecture.presentation.vm.AddViewModel
 
 
 class AddFragment : Fragment() {
 
-    private val mToDoViewModel: ToDoViewModel by viewModels()
+    private val mAddViewModel: AddViewModel by viewModels()
     private val mSharedViewModel: SharedViewModel by viewModels()
 
     private var _binding: FragmentAddBinding? = null
@@ -62,7 +62,7 @@ class AddFragment : Fragment() {
                 mSharedViewModel.parsePriority(mPriority),
                 mDescription
             )
-            mToDoViewModel.insertData(newData)
+            mAddViewModel.insertData(newData)
             Toast.makeText(requireContext(), "Successfully added!", Toast.LENGTH_SHORT).show()
             // Navigate Back
             findNavController().navigate(R.id.action_addFragment_to_listFragment)

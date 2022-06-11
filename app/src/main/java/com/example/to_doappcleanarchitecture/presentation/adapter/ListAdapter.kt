@@ -6,10 +6,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.to_doappcleanarchitecture.R
 import com.example.to_doappcleanarchitecture.data.model.ToDoData
 import com.example.to_doappcleanarchitecture.presentation.model.Priority
+import com.example.to_doappcleanarchitecture.presentation.ui.ListFragmentDirections
 
 class ListAdapter : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
 
@@ -37,7 +39,12 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
         holder.tvTitle.text = data.title
         holder.tvDescription.text = data.description
 
-        when (this.data[position].priority) {
+        holder.itemView.setOnClickListener {
+            val action = ListFragmentDirections.actionListFragmentToUpdateFragment(data)
+            holder.itemView.findNavController().navigate(action)
+        }
+
+        when (data.priority) {
             Priority.HIGH -> {
                 holder.cvPriority.setCardBackgroundColor(
                     ContextCompat.getColor(
