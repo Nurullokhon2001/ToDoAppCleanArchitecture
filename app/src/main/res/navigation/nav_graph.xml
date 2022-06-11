@@ -54,7 +54,7 @@
             app:destination="@id/listFragment" />
         <argument
             android:name="currentItem"
-            app:argType="com.example.to_doappcleanarchitecture.data.model.ToDoData" />
+            app:argType="com.example.to_doappcleanarchitecture.domain.model.ToDoData" />
 
 
     </fragment>

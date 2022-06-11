@@ -1,9 +1,9 @@
-package com.example.to_doappcleanarchitecture.data.model
+package com.example.to_doappcleanarchitecture.domain.model
 
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.to_doappcleanarchitecture.presentation.model.Priority
+import com.example.to_doappcleanarchitecture.domain.model.Priority
 import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "todo_table")

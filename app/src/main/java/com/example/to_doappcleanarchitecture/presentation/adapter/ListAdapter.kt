@@ -9,8 +9,8 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.to_doappcleanarchitecture.R
-import com.example.to_doappcleanarchitecture.data.model.ToDoData
-import com.example.to_doappcleanarchitecture.presentation.model.Priority
+import com.example.to_doappcleanarchitecture.domain.model.ToDoData
+import com.example.to_doappcleanarchitecture.domain.model.Priority
 import com.example.to_doappcleanarchitecture.presentation.ui.ListFragmentDirections
 
 class ListAdapter : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
