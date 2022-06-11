@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.to_doappcleanarchitecture.data.converter.Converter
 import com.example.to_doappcleanarchitecture.data.dao.ToDoDao
-import com.example.to_doappcleanarchitecture.data.model.ToDoData
+import com.example.to_doappcleanarchitecture.domain.model.ToDoData
 
 @Database(entities = [ToDoData::class], version = 1, exportSchema = false)
 @TypeConverters(Converter::class)

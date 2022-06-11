@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.to_doappcleanarchitecture.R
-import com.example.to_doappcleanarchitecture.data.model.ToDoData
+import com.example.to_doappcleanarchitecture.domain.model.ToDoData
 import com.example.to_doappcleanarchitecture.databinding.FragmentAddBinding
 import com.example.to_doappcleanarchitecture.presentation.vm.SharedViewModel
 import com.example.to_doappcleanarchitecture.presentation.vm.AddViewModel
@@ -57,10 +57,10 @@ class AddFragment : Fragment() {
         if (validation) {
             // Insert Data to Database
             val newData = ToDoData(
-                0,
-                mTitle,
-                mSharedViewModel.parsePriority(mPriority),
-                mDescription
+                id = 0,
+                title = mTitle,
+                priority = mSharedViewModel.parsePriority(mPriority),
+                description = mDescription
             )
             mAddViewModel.insertData(newData)
             Toast.makeText(requireContext(), "Successfully added!", Toast.LENGTH_SHORT).show()
