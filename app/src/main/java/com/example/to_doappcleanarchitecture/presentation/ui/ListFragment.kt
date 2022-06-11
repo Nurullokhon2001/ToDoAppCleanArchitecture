@@ -11,12 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.to_doappcleanarchitecture.R
 import com.example.to_doappcleanarchitecture.presentation.adapter.ListAdapter
-import com.example.to_doappcleanarchitecture.presentation.vm.ToDoViewModel
+import com.example.to_doappcleanarchitecture.presentation.vm.ListViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ListFragment : Fragment() {
 
-    private val mToDoViewModel: ToDoViewModel by viewModels()
+    private val mToDoViewModel: ListViewModel by viewModels()
     private val listAdapter: ListAdapter by lazy { ListAdapter() }
 
     override fun onCreateView(
