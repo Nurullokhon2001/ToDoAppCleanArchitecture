@@ -1,5 +1,6 @@
 package com.example.to_doappcleanarchitecture.presentation.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -47,39 +48,60 @@ class UpdateFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.save_to_do -> {
-                val title = binding.etTitle.text.toString()
-                val description = binding.etDescription.text.toString()
-                val priority = binding.spPriority.selectedItem.toString()
-
-                val validate =
-                    mSharedViewModel.verifyDataFromUser(title = title, description = description)
-
-                val data = ToDoData(
-                    id = args.currentItem.id,
-                    title = title,
-                    priority = mSharedViewModel.parsePriority(priority),
-                    description = description
-                )
-
-                if (validate) {
-                    updateViewModel.updateData(data)
-                    Toast.makeText(requireContext(), "Successfully updated!", Toast.LENGTH_SHORT)
-                        .show()
-                    findNavController().navigateUp()
-
-                } else {
-                    Toast.makeText(
-                        requireContext(),
-                        "Please fill out all fields.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                updateData()
             }
-            else -> {
-
+            R.id.delete_to_do -> {
+                removeData()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun removeData() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setPositiveButton("Yes") { _, _ ->
+            updateViewModel.deleteData(args.currentItem)
+            Toast.makeText(
+                requireContext(),
+                "Successfully Removed ${args.currentItem.title}",
+                Toast.LENGTH_SHORT
+            ).show()
+            findNavController().navigateUp()
+        }
+        builder.setNegativeButton("No") { _, _ -> }
+        builder.setTitle("Delete '${args.currentItem.title}'")
+        builder.setMessage("Are you sure you want remove '${args.currentItem.title}' ?")
+        builder.create().show()
+    }
+
+    private fun updateData() {
+        val title = binding.etTitle.text.toString()
+        val description = binding.etDescription.text.toString()
+        val priority = binding.spPriority.selectedItem.toString()
+
+        val validate =
+            mSharedViewModel.verifyDataFromUser(title = title, description = description)
+
+        val data = ToDoData(
+            id = args.currentItem.id,
+            title = title,
+            priority = mSharedViewModel.parsePriority(priority),
+            description = description
+        )
+
+        if (validate) {
+            updateViewModel.updateData(data)
+            Toast.makeText(requireContext(), "Successfully updated!", Toast.LENGTH_SHORT)
+                .show()
+            findNavController().navigateUp()
+
+        } else {
+            Toast.makeText(
+                requireContext(),
+                "Please fill out all fields.",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     override fun onDestroyView() {

@@ -8,5 +8,6 @@ interface ToDoRepository {
     fun getAllData(): LiveData<List<ToDoData>>
     suspend fun insertData(toDoData: ToDoData)
     suspend fun updateData(toDoData: ToDoData)
+    suspend fun deleteData(toDoData: ToDoData)
 
 }
