@@ -66,7 +66,7 @@ class UpdateFragment : Fragment() {
                 "Successfully Removed ${args.currentItem.title}",
                 Toast.LENGTH_SHORT
             ).show()
-            findNavController().navigateUp()
+            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
         }
         builder.setNegativeButton("No") { _, _ -> }
         builder.setTitle("Delete '${args.currentItem.title}'")
@@ -93,7 +93,7 @@ class UpdateFragment : Fragment() {
             updateViewModel.updateData(data)
             Toast.makeText(requireContext(), "Successfully updated!", Toast.LENGTH_SHORT)
                 .show()
-            findNavController().navigateUp()
+            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
 
         } else {
             Toast.makeText(

@@ -22,4 +22,8 @@ class ToDoRepositoryImpl(private val toDoDao: ToDoDao) : ToDoRepository {
     override suspend fun deleteData(toDoData: ToDoData) {
         toDoDao.deleteData(toDoData = toDoData)
     }
+
+    override suspend fun deleteAllData() {
+        toDoDao.deleteAllData()
+    }
 }
