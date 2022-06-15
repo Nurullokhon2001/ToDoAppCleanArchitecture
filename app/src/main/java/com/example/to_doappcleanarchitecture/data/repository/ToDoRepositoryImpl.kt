@@ -12,10 +12,14 @@ class ToDoRepositoryImpl(private val toDoDao: ToDoDao) : ToDoRepository {
     }
 
     override suspend fun insertData(toDoData: ToDoData) {
-        toDoDao.insertData(toDoData =toDoData)
+        toDoDao.insertData(toDoData = toDoData)
     }
 
     override suspend fun updateData(toDoData: ToDoData) {
         toDoDao.updateData(toDoData = toDoData)
+    }
+
+    override suspend fun deleteData(toDoData: ToDoData) {
+        toDoDao.deleteData(toDoData = toDoData)
     }
 }
