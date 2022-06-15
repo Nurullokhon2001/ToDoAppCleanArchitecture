@@ -8,7 +8,6 @@
         android:iconTint="@color/white"
         android:title="@string/search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-
         app:showAsAction="ifRoom" />
 
     <group android:checkableBehavior="single">

@@ -1,9 +1,10 @@
 package com.example.to_doappcleanarchitecture.presentation.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -51,4 +52,29 @@ class ListFragment : Fragment() {
         inflater.inflate(R.menu.list_fragment_menu, menu)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.menu_delete_all -> {
+                removeAllData()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun removeAllData() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setPositiveButton("Yes") { _, _ ->
+            mToDoViewModel.deleteAll()
+            Toast.makeText(
+                requireContext(),
+                "Successfully Removed ",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        builder.setNegativeButton("No") { _, _ -> }
+        builder.setTitle("All data deleted")
+        builder.setMessage("Are you sure you want remove all data ?")
+        builder.create().show()
+    }
 }

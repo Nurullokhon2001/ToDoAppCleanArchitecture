@@ -9,5 +9,6 @@ interface ToDoRepository {
     suspend fun insertData(toDoData: ToDoData)
     suspend fun updateData(toDoData: ToDoData)
     suspend fun deleteData(toDoData: ToDoData)
+    suspend fun deleteAllData()
 
 }
