@@ -1,16 +1,17 @@
 package com.example.to_doappcleanarchitecture.presentation.vm
 
-import android.app.Application
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.to_doappcleanarchitecture.core.BaseViewModel
 import com.example.to_doappcleanarchitecture.domain.model.ToDoData
 import com.example.to_doappcleanarchitecture.domain.use_case.AddUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class AddViewModel(application: Application) : BaseViewModel(application) {
+class AddViewModel : ViewModel(), KoinComponent {
 
-    private val addUseCase : AddUseCase = AddUseCase(repository)
+    private val addUseCase by inject<AddUseCase>()
 
     fun insertData(toDoData: ToDoData) {
         viewModelScope.launch(Dispatchers.IO) {

@@ -8,11 +8,10 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.to_doappcleanarchitecture.R
-import com.example.to_doappcleanarchitecture.core.BaseViewModel
-import com.example.to_doappcleanarchitecture.domain.model.ToDoData
 import com.example.to_doappcleanarchitecture.domain.model.Priority
+import com.example.to_doappcleanarchitecture.domain.model.ToDoData
 
-class SharedViewModel(application: Application) : BaseViewModel(application) {
+class SharedViewModel(application: Application) : AndroidViewModel(application) {
 
     /** ============================= List Fragment ============================= */
 
