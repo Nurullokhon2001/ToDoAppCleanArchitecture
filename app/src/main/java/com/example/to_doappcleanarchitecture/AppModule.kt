@@ -1,72 +1,36 @@
 package com.example.to_doappcleanarchitecture
 
 
+import androidx.room.Room
 import com.example.to_doappcleanarchitecture.data.database.ToDoDatabase
 import com.example.to_doappcleanarchitecture.data.repository.ToDoRepositoryImpl
 import com.example.to_doappcleanarchitecture.domain.repository.ToDoRepository
 import com.example.to_doappcleanarchitecture.domain.use_case.*
+import com.example.to_doappcleanarchitecture.presentation.vm.AddViewModel
 import com.example.to_doappcleanarchitecture.presentation.vm.ListViewModel
 import com.example.to_doappcleanarchitecture.presentation.vm.UpdateViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModelOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 
 val databaseModule = module {
-    single {
-        ToDoDatabase.getDatabase(
-            get()
-        ).toDoDao()
-    }
-
-    single<ToDoRepository> { ToDoRepositoryImpl(toDoDao = get()) }
-
+    single { Room.databaseBuilder(get(), ToDoDatabase::class.java, "notes").build() }
+    single { get<ToDoDatabase>().toDoDao() }
+    single<ToDoRepository> { ToDoRepositoryImpl(get()) }
 }
 
 val useCaseModule = module {
-    factory<AddUseCase> {
-        AddUseCase(repository = get())
-    }
-
-    factory<DeleteAllDataUseCase> {
-        DeleteAllDataUseCase(repository = get())
-    }
-
-    factory<DeleteDataUseCase> {
-        DeleteDataUseCase(repository = get())
-    }
-
-    factory<ListUseCase> {
-        ListUseCase(getAllDataUseCase = get(), deleteAllDataUseCase = get())
-    }
-
-    factory<GetAllDataUseCase> {
-        GetAllDataUseCase(repository = get())
-    }
-
-
-    factory<UpdateDataUseCase> {
-        UpdateDataUseCase(repository = get())
-    }
-
-    factory<UpdateUseCase> {
-        UpdateUseCase(
-            updateDataUseCase = get(),
-            deleteDataUseCase = get()
-        )
-    }
+    singleOf(::AddUseCase)
+    singleOf(::DeleteAllDataUseCase)
+    singleOf(::DeleteDataUseCase)
+    singleOf(::GetAllDataUseCase)
+    singleOf(::UpdateDataUseCase)
 }
 
 val viewModel = module {
-
-    viewModel<ListViewModel> {
-        ListViewModel(
-            repository = get()
-        )
-    }
-
-    viewModel<UpdateViewModel> {
-        UpdateViewModel(
-            repository = get()
-        )
-    }
+    viewModelOf(::UpdateViewModel)
+    viewModelOf(::AddViewModel)
+    viewModel { ListViewModel() }
 }

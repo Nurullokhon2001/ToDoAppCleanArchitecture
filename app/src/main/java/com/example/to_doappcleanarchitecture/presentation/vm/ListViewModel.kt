@@ -4,17 +4,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.to_doappcleanarchitecture.domain.model.ToDoData
-import com.example.to_doappcleanarchitecture.domain.use_case.ListUseCase
+import com.example.to_doappcleanarchitecture.domain.use_case.DeleteAllDataUseCase
+import com.example.to_doappcleanarchitecture.domain.use_case.GetAllDataUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class ListViewModel(val repository: ListUseCase) : ViewModel() {
+class ListViewModel : ViewModel(), KoinComponent {
 
-    val getAllData: LiveData<List<ToDoData>> = repository.getAllDataUseCase.invoke()
+    private val getAllDataUseCase by inject<GetAllDataUseCase>()
+    private val deleteAllDataUseCase by inject<DeleteAllDataUseCase>()
+
+    val getAllData: LiveData<List<ToDoData>> = getAllDataUseCase.invoke()
 
     fun deleteAll() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteAllDataUseCase.invoke()
+            deleteAllDataUseCase.invoke()
         }
     }
 
