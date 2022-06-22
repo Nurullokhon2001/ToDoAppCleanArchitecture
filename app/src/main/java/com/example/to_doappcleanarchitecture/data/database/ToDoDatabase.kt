@@ -1,6 +1,7 @@
 package com.example.to_doappcleanarchitecture.data.database
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -21,6 +22,7 @@ abstract class ToDoDatabase : RoomDatabase() {
         private var INSTANCE: ToDoDatabase? = null
 
         fun getDatabase(context: Context): ToDoDatabase {
+            Log.e("getDatabase", "getDatabase: ")
 
             val tempInstance = INSTANCE
             if (tempInstance != null) {
