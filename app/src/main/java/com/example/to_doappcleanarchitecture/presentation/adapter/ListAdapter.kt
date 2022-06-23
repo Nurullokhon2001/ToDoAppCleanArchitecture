@@ -7,10 +7,11 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.to_doappcleanarchitecture.R
-import com.example.to_doappcleanarchitecture.domain.model.ToDoData
 import com.example.to_doappcleanarchitecture.domain.model.Priority
+import com.example.to_doappcleanarchitecture.domain.model.ToDoData
 import com.example.to_doappcleanarchitecture.presentation.ui.ListFragmentDirections
 
 class ListAdapter : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
@@ -18,8 +19,10 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
     var data = emptyList<ToDoData>()
 
     fun submitList(toDoData: List<ToDoData>) {
+        val diffUtil = ToDoDiffUtil(data, toDoData)
+        val toDoDiffResult = DiffUtil.calculateDiff(diffUtil)
         this.data = toDoData
-        notifyDataSetChanged()
+        toDoDiffResult.dispatchUpdatesTo(this)
     }
 
     class ListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
