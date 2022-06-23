@@ -1,6 +1,5 @@
 package com.example.to_doappcleanarchitecture
 
-
 import androidx.room.Room
 import com.example.to_doappcleanarchitecture.data.database.ToDoDatabase
 import com.example.to_doappcleanarchitecture.data.repository.ToDoRepositoryImpl
@@ -14,7 +13,6 @@ import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
-
 val databaseModule = module {
     single { Room.databaseBuilder(get(), ToDoDatabase::class.java, "notes").build() }
     single { get<ToDoDatabase>().toDoDao() }
@@ -27,6 +25,7 @@ val useCaseModule = module {
     singleOf(::DeleteDataUseCase)
     singleOf(::GetAllDataUseCase)
     singleOf(::UpdateDataUseCase)
+    singleOf(::SearchDataBaseUseCase)
 }
 
 val viewModel = module {

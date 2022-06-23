@@ -11,6 +11,10 @@ class ToDoRepositoryImpl(private val toDoDao: ToDoDao) : ToDoRepository {
         return toDoDao.getAllData()
     }
 
+    override fun searchDatabase(string: String): LiveData<List<ToDoData>> {
+        return toDoDao.searchInDatabase(string)
+    }
+
     override suspend fun insertData(toDoData: ToDoData) {
         toDoDao.insertData(toDoData = toDoData)
     }
