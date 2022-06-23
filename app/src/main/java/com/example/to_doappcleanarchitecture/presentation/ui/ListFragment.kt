@@ -20,6 +20,7 @@ import com.example.to_doappcleanarchitecture.presentation.vm.AddViewModel
 import com.example.to_doappcleanarchitecture.presentation.vm.ListViewModel
 import com.example.to_doappcleanarchitecture.presentation.vm.UpdateViewModel
 import com.google.android.material.snackbar.Snackbar
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 
 class ListFragment : Fragment() {
 
@@ -52,6 +53,9 @@ class ListFragment : Fragment() {
         binding.listLayout.adapter = listAdapter
         binding.listLayout.layoutManager = LinearLayoutManager(requireContext())
         swipeToDelete(binding.listLayout)
+        binding.listLayout.itemAnimator = SlideInUpAnimator().apply {
+            addDuration = 500
+        }
 
         listViewModel.getAllData.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
