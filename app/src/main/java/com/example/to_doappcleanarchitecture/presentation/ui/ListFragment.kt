@@ -8,11 +8,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.to_doappcleanarchitecture.R
 import com.example.to_doappcleanarchitecture.databinding.FragmentListBinding
 import com.example.to_doappcleanarchitecture.domain.model.ToDoData
 import com.example.to_doappcleanarchitecture.presentation.adapter.ListAdapter
+import com.example.to_doappcleanarchitecture.presentation.adapter.SwipeToDelete
 import com.example.to_doappcleanarchitecture.presentation.vm.ListViewModel
 
 class ListFragment : Fragment() {
@@ -23,7 +26,7 @@ class ListFragment : Fragment() {
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
 
-    private var toDoArray : List<ToDoData> = emptyList()
+    private var toDoArray: List<ToDoData> = emptyList()
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -42,11 +45,12 @@ class ListFragment : Fragment() {
         }
         binding.listLayout.adapter = listAdapter
         binding.listLayout.layoutManager = LinearLayoutManager(requireContext())
+        swipeToDelete(binding.listLayout)
 
         mToDoViewModel.getAllData.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 listAdapter.submitList(it)
-                toDoArray=it
+                toDoArray = it
             } else {
                 binding.ivNoData.visibility = View.VISIBLE
                 binding.tvNoData.visibility = View.VISIBLE
@@ -76,7 +80,7 @@ class ListFragment : Fragment() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton("Yes") { _, _ ->
 
-            if (toDoArray.isNotEmpty()){
+            if (toDoArray.isNotEmpty()) {
                 mToDoViewModel.deleteAll()
                 toDoArray = emptyList()
                 listAdapter.submitList(toDoArray)
@@ -85,7 +89,7 @@ class ListFragment : Fragment() {
                     "Successfully Removed ",
                     Toast.LENGTH_SHORT
                 ).show()
-            }else {
+            } else {
                 Toast.makeText(
                     requireContext(),
                     "The database is already empty :(",
@@ -97,6 +101,22 @@ class ListFragment : Fragment() {
         builder.setTitle("All data deleted")
         builder.setMessage("Are you sure you want remove all data ?")
         builder.create().show()
+    }
+
+    private fun swipeToDelete(recyclerView: RecyclerView) {
+        val swipeToDeleteCallBack = object : SwipeToDelete() {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val itemToDelete = listAdapter.data[viewHolder.adapterPosition]
+                mToDoViewModel.deleteData(itemToDelete)
+                Toast.makeText(
+                    requireContext(),
+                    "Successfully Removed ${itemToDelete.title}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallBack)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
     override fun onDestroyView() {
