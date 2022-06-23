@@ -16,17 +16,23 @@ import com.example.to_doappcleanarchitecture.databinding.FragmentListBinding
 import com.example.to_doappcleanarchitecture.domain.model.ToDoData
 import com.example.to_doappcleanarchitecture.presentation.adapter.ListAdapter
 import com.example.to_doappcleanarchitecture.presentation.adapter.SwipeToDelete
+import com.example.to_doappcleanarchitecture.presentation.vm.AddViewModel
 import com.example.to_doappcleanarchitecture.presentation.vm.ListViewModel
+import com.example.to_doappcleanarchitecture.presentation.vm.UpdateViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class ListFragment : Fragment() {
 
-    private val mToDoViewModel: ListViewModel by viewModels()
+    private val listViewModel: ListViewModel by viewModels()
+    private val updateViewModel: UpdateViewModel by viewModels()
+    private val addViewModel: AddViewModel by viewModels()
+
     private val listAdapter: ListAdapter by lazy { ListAdapter() }
+    private var toDoArray: List<ToDoData> = emptyList()
+
 
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
-
-    private var toDoArray: List<ToDoData> = emptyList()
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -47,7 +53,7 @@ class ListFragment : Fragment() {
         binding.listLayout.layoutManager = LinearLayoutManager(requireContext())
         swipeToDelete(binding.listLayout)
 
-        mToDoViewModel.getAllData.observe(viewLifecycleOwner) {
+        listViewModel.getAllData.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 listAdapter.submitList(it)
                 toDoArray = it
@@ -81,7 +87,7 @@ class ListFragment : Fragment() {
         builder.setPositiveButton("Yes") { _, _ ->
 
             if (toDoArray.isNotEmpty()) {
-                mToDoViewModel.deleteAll()
+                listViewModel.deleteAll()
                 toDoArray = emptyList()
                 listAdapter.submitList(toDoArray)
                 Toast.makeText(
@@ -107,16 +113,26 @@ class ListFragment : Fragment() {
         val swipeToDeleteCallBack = object : SwipeToDelete() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val itemToDelete = listAdapter.data[viewHolder.adapterPosition]
-                mToDoViewModel.deleteData(itemToDelete)
-                Toast.makeText(
-                    requireContext(),
-                    "Successfully Removed ${itemToDelete.title}",
-                    Toast.LENGTH_SHORT
-                ).show()
+                updateViewModel.deleteData(itemToDelete)
+                listAdapter.notifyItemRemoved(viewHolder.adapterPosition)
+
+                restoredDeletedItem(viewHolder.itemView, itemToDelete, viewHolder.adapterPosition)
             }
         }
         val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallBack)
         itemTouchHelper.attachToRecyclerView(recyclerView)
+    }
+
+    private fun restoredDeletedItem(view: View, deletedItem: ToDoData, position: Int) {
+        val snackBar = Snackbar.make(
+            view, "Deleted ${deletedItem.title}",
+            Snackbar.LENGTH_LONG
+        )
+        snackBar.setAction("Undo") {
+            addViewModel.insertData(deletedItem)
+            listAdapter.notifyItemChanged(position)
+        }
+        snackBar.show()
     }
 
     override fun onDestroyView() {

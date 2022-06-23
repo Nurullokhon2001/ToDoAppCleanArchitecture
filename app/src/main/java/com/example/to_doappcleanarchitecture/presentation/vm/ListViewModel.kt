@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.to_doappcleanarchitecture.domain.model.ToDoData
 import com.example.to_doappcleanarchitecture.domain.use_case.DeleteAllDataUseCase
-import com.example.to_doappcleanarchitecture.domain.use_case.DeleteDataUseCase
 import com.example.to_doappcleanarchitecture.domain.use_case.GetAllDataUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,7 +15,6 @@ class ListViewModel : ViewModel(), KoinComponent {
 
     private val getAllDataUseCase by inject<GetAllDataUseCase>()
     private val deleteAllDataUseCase by inject<DeleteAllDataUseCase>()
-    private val deleteDataUseCase by inject<DeleteDataUseCase>()
 
     val getAllData: LiveData<List<ToDoData>> = getAllDataUseCase.invoke()
 
@@ -26,11 +24,6 @@ class ListViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    fun deleteData(toDoData: ToDoData) {
-        viewModelScope.launch(Dispatchers.IO) {
-            deleteDataUseCase.invoke(toDoData = toDoData)
-        }
-    }
 
 //    val sortByHighPriority: LiveData<List<ToDoData>> = repository.sortByHighPriority
 //    val sortByLowPriority: LiveData<List<ToDoData>> = repository.sortByLowPriority
