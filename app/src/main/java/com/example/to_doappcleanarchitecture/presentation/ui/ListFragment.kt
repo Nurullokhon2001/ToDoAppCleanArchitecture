@@ -11,8 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.to_doappcleanarchitecture.R
 import com.example.to_doappcleanarchitecture.databinding.FragmentListBinding
 import com.example.to_doappcleanarchitecture.domain.model.ToDoData
@@ -53,7 +53,8 @@ class ListFragment : Fragment() {
             findNavController().navigate(R.id.action_listFragment_to_updateFragment)
         }
         binding.listLayout.adapter = listAdapter
-        binding.listLayout.layoutManager = LinearLayoutManager(requireContext())
+        binding.listLayout.layoutManager =
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         swipeToDelete(binding.listLayout)
         binding.listLayout.itemAnimator = SlideInUpAnimator().apply {
             addDuration = 500
