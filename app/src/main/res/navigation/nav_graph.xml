@@ -47,8 +47,9 @@
             android:id="@+id/action_updateFragment_to_listFragment"
             app:destination="@id/listFragment"
             app:enterAnim="@anim/from_right"
-            app:exitAnim="@anim/to_left" >
-        </action>
+            app:exitAnim="@anim/to_left"
+            app:popUpTo="@id/listFragment"
+            app:popUpToInclusive="true"></action>
         <argument
             android:name="currentItem"
             app:argType="com.example.to_doappcleanarchitecture.domain.model.ToDoData" />
