@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/listFragment">
+    app:startDestination="@id/signInFragment">
 
     <fragment
         android:id="@+id/listFragment"
         android:name="com.example.to_doappcleanarchitecture.presentation.ui.ListFragment"
         android:label="ToDO"
-        tools:layout="@layout/fragment_list" >
+        tools:layout="@layout/fragment_list">
         <action
             android:id="@+id/action_listFragment_to_addFragment"
             app:destination="@id/addFragment"
@@ -56,4 +56,9 @@
 
 
     </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.example.to_doappcleanarchitecture.firebase.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" />
 </navigation>

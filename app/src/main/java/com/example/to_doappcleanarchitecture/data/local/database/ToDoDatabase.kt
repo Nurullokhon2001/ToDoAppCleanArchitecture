@@ -1,4 +1,4 @@
-package com.example.to_doappcleanarchitecture.data.database
+package com.example.to_doappcleanarchitecture.data.local.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

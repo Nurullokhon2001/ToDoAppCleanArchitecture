@@ -1,10 +1,11 @@
 package com.example.to_doappcleanarchitecture
 
 import androidx.room.Room
-import com.example.to_doappcleanarchitecture.data.database.ToDoDatabase
-import com.example.to_doappcleanarchitecture.data.repository.ToDoRepositoryImpl
+import com.example.to_doappcleanarchitecture.data.local.database.ToDoDatabase
+import com.example.to_doappcleanarchitecture.data.local.repository.ToDoRepositoryImpl
 import com.example.to_doappcleanarchitecture.domain.repository.ToDoRepository
 import com.example.to_doappcleanarchitecture.domain.use_case.*
+import com.example.to_doappcleanarchitecture.firebase.FireBaseViewModel
 import com.example.to_doappcleanarchitecture.presentation.vm.AddViewModel
 import com.example.to_doappcleanarchitecture.presentation.vm.ListViewModel
 import com.example.to_doappcleanarchitecture.presentation.vm.UpdateViewModel
@@ -32,4 +33,7 @@ val viewModel = module {
     viewModelOf(::UpdateViewModel)
     viewModelOf(::AddViewModel)
     viewModel { ListViewModel() }
+    viewModelOf(::FireBaseViewModel)
+
+
 }

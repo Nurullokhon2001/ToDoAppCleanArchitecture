@@ -1,4 +1,4 @@
-package com.example.to_doappcleanarchitecture.data.repository
+package com.example.to_doappcleanarchitecture.data.local.repository
 
 import androidx.lifecycle.LiveData
 import com.example.to_doappcleanarchitecture.data.dao.ToDoDao
